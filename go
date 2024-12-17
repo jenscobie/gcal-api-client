@@ -11,6 +11,8 @@ function helptext {
     echo "    format      Run format rules only against repository"
     echo "    int         Run integration test suite"
     echo "    lint        Run lint rules only against repository"
+    echo "    package     Package the library into source and compiled formats"
+    echo "    publish     Publish the library to artifact store"
     echo "    test        Run unit test suite"
 }
 
@@ -18,7 +20,6 @@ function coverage {
     validate_environment
 
     poetry run pytest --cov=gcal_manager --cov-report=html tests/unit
-    open htmlcov/index.html
 }
 
 function format {
@@ -45,6 +46,18 @@ function integration {
     poetry run pytest tests/integration
 }
 
+function package {
+    validate_environment
+
+    poetry build
+}
+
+function publish {
+    validate_environment
+
+    poetry publish
+}
+
 function validate_environment {
     command -v poetry >/dev/null 2>&1 || { echo >&2 "Please install poetry"; exit 1; }
 
@@ -55,18 +68,24 @@ function validate_environment {
 [[ $@ ]] || { helptext; exit 1; }
 
 case "$1" in
-    help) helptext
-    ;;
     cov) coverage;
     ;;
     build) format;lint;test;coverage;integration;
     ;;
     format) format
     ;;
+    help) helptext
+    ;;
+    int) integration
+    ;;
     lint) lint
+    ;;
+    package) package
+    ;;
+    publish) publish
     ;;
     test) test
     ;;
-    int) integration
+    *) helptext
     ;;
 esac

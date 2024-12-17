@@ -49,6 +49,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+.ruff_cache/
 cover/
 
 # Translations
@@ -167,3 +168,6 @@ cython_debug/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+credentials.json
+token.json
