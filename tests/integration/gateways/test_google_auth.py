@@ -1,10 +1,10 @@
 from pathlib import Path
 
+import pytest
+
 from gcal_manager.infrastructure.gateways.google_calendar_gateway import (
     credentials,
 )
-
-package = "gcal_manager.infrastructure.gateways.google_calendar_gateway"
 
 
 def test_token_doesnt_exist() -> None:
@@ -39,6 +39,7 @@ def test_expired_token_exists() -> None:
     assert creds.valid
 
 
+@pytest.mark.skip(reason="test launches a browser window")
 def test_credentials_exist() -> None:
     path = "tests/data/account/credentials-only"
     directory = Path(path)

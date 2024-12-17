@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from google.auth.credentials import Credentials
+if TYPE_CHECKING:
+    from google.auth.credentials import Credentials
+
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials as OAuthCredentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -55,10 +58,12 @@ def credentials(directory: Path) -> Credentials | None:
 
 
 def auth(credentials: Credentials) -> Resource:
-    """Authenticate against the Google Calendar API and return a resource for
+    """Returns a Google Calendar API resource.
+
+    Authenticate against the Google Calendar API and return a resource for
     querying the calendar.
 
     Args:
         credentials: Secrets used to connect to Google Calendar API.
     """
-    return build("calendar", "v3", credentials)
+    return build("calendar", "v3", credentials=credentials)

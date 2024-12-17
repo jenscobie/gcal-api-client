@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-from gcal_manager.domain.model.account import Account
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from gcal_manager.domain.model.account_id import AccountId
+    from gcal_manager.domain.model.calendar_id import CalendarId
 
 
+@dataclass(frozen=True)
 class Calendar:
-    """A class to represent a Google Calendar."""
-
-
-def get(account: Account) -> list[Calendar]:
-    """Return all calendars associated with an account."""
-
-
-def remove(calendar: Calendar) -> None:
-    """Remove calendar from the set of known calendars."""
+    calendar_id: CalendarId = None
+    account_id: AccountId = None
+    name: str = None

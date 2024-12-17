@@ -6,13 +6,18 @@ Typical usage example:
   events = gateway.search()
 """
 
-from pathlib import Path
-from typing import Self
+from __future__ import annotations
 
-from gcal_manager.domain.model.account_id import AccountId
+from typing import TYPE_CHECKING, Self
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from gcal_manager.domain.model.account_id import AccountId
+
+from gcal_manager.domain.model.calendar import Calendar
+from gcal_manager.domain.model.calendar_id import CalendarId
 from gcal_manager.infrastructure.gateways.google_auth import auth, credentials
-
-scopes = ["https://www.googleapis.com/auth/calendar"]
 
 
 class GoogleCalendarGateway:
@@ -28,5 +33,18 @@ class GoogleCalendarGateway:
         self.directory = directory
         self.account_id = account_id
 
-        creds = credentials(self.account_id)
+        creds = credentials(self.directory)
         self.client = auth(creds)
+
+    def calendars(self) -> list[Calendar]:
+        """Returns a list of calendars associated with the account."""
+        results = self.client.calendarList().list().execute()
+
+        return [
+            Calendar(
+                calendar_id=CalendarId(result["id"]),
+                account_id=self.account_id,
+                name=result["summary"],
+            )
+            for result in results["items"]
+        ]
