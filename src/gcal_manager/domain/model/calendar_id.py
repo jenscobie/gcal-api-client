@@ -21,7 +21,7 @@ class CalendarId(JSONWizard):
         value: Unique identifier.
     """
 
-    value: str = None
+    value: str
 
     def primary() -> Self:
         """Returns primary calendar id."""

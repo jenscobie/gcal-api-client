@@ -21,7 +21,7 @@ class AccountId(JSONWizard):
         value: Unique identifier.
     """
 
-    value: str = None
+    value: str
 
     def personal() -> Self:
         """Returns personal account id."""

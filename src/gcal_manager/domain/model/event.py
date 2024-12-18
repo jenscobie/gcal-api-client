@@ -2,22 +2,19 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from datetime import datetime
 
+from gcal_manager.domain.model.calendar_id import CalendarId
+
+
+@dataclass(frozen=True)
 class Event:
-    """A class to represent an event on a Google Calendar."""
-
-
-def get() -> list[Event]:
-    """Return all events."""
-
-
-def search() -> list[Event]:
-    """Return all events matching search criteria."""
-
-
-def create(event: Event) -> None:
-    """Add event to Google Calendar."""
-
-
-def delete(event: Event) -> None:
-    """Remove event from Google Calendar."""
+    calendar_id: CalendarId
+    event_id: str
+    name: str
+    description: str
+    location: str
+    url: str
+    start: datetime
+    end: datetime

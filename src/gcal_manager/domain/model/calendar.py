@@ -12,6 +12,6 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class Calendar:
-    calendar_id: CalendarId = None
-    account_id: AccountId = None
-    name: str = None
+    calendar_id: CalendarId
+    account_id: AccountId
+    name: str
