@@ -2,9 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from gcal_manager.infrastructure.gateways.google_calendar_gateway import (
-    credentials,
-)
+from gcal_manager._services.google_auth import credentials
 
 
 def test_token_doesnt_exist() -> None:

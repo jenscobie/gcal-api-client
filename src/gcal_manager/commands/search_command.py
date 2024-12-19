@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 import dateparser
 
-from gcal_manager.domain.model.task_id import TaskId
+from gcal_manager.task_id import TaskId
 
 
 class SearchCommand:

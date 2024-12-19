@@ -1,4 +1,4 @@
-"""Authentication and authorization for the Google Calendar API."""
+"""Authentication and authorization for the Google APIs."""
 
 from __future__ import annotations
 

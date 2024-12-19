@@ -1,7 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
-from gcal_manager.domain.commands.search_command import SearchCommand
-from gcal_manager.domain.model.task_id import TaskId
+from gcal_manager.commands.search_command import SearchCommand
+from gcal_manager.task_id import TaskId
 
 
 def test_no_date() -> None:
@@ -16,7 +16,10 @@ def test_date_parsing() -> None:
         date="today", task_id=TaskId("one"), search_term="two"
     )
 
-    assert search.from_date().date() == datetime.today().date()
+    assert (
+        search.from_date().date()
+        == datetime.now(tz=timezone.utc).today().date()
+    )
 
 
 def test_query() -> None:
