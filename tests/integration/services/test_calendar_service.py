@@ -5,7 +5,7 @@ from gcal_manager.account_id import AccountId
 from gcal_manager.calendar import Calendar
 
 
-def test_list_calendars() -> None:
+def test_search_calendars() -> None:
     directory = Path("tests/data/account/valid-token")
     account_id = AccountId("valid-token")
 

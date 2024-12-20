@@ -2,8 +2,8 @@
 
 Typical usage example:
 
-  service = AccountService()
-  accounts = service.search()
+  service = AccountService(path)
+  accounts = service.search_accounts()
 """
 
 from __future__ import annotations
@@ -22,12 +22,9 @@ class AccountService:
     def search_accounts(self) -> list[Account]:
         """Returns a list of known accounts."""
 
-        return [
-            self.account_id(d)
-            for d in self.list_directories()
-        ]
-    
-    def account_id(self, directory: Path) -> Account:
+        return [self.account(d) for d in self.list_directories()]
+
+    def account(self, directory: Path) -> Account:
         account_id = AccountId(directory.name)
         return Account(account_id=account_id, path=directory)
 
