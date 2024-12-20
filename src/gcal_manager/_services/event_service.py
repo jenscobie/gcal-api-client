@@ -11,6 +11,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING, Self
 
+from gcal_manager._services.base_service import BaseService
 from gcal_manager.commands.search_command import SearchCommand
 from gcal_manager.event import Event
 from gcal_manager.event_id import EventId
@@ -18,23 +19,17 @@ from gcal_manager.event_id import EventId
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from gcal_manager.account_id import AccountId
-
-from gcal_manager._services.google_auth import auth, credentials
 from gcal_manager.calendar_id import CalendarId
 
 
-class EventService:
+class EventService(BaseService):
     def __init__(self, directory: Path) -> Self:
         """Constructor.
 
         Args:
             directory: Directory to search for credentials file.
         """
-        self.directory = directory
-
-        creds = credentials(self.directory)
-        self.client = auth(creds)
+        super().__init__(directory)
 
     def search_events(
         self, calendar_id: CalendarId, command: SearchCommand
