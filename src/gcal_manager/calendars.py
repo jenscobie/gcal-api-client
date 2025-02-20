@@ -1,4 +1,9 @@
-"""Store and retrieve Google Calendar information."""
+"""A calendar linked to a Google account.
+
+Typical usage example:
+
+  calendar = Calendar("primary", "jenscobie@gmail.com", "Events")
+"""
 
 from __future__ import annotations
 
@@ -12,6 +17,14 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class Calendar:
+    """Unique identifier for a task.
+
+    Args:
+      calendar_id: Unique identifier.
+      account_id: Unique identifier.
+      name: Unique identifier.
+    """
+
     calendar_id: CalendarId
     account_id: AccountId
     name: str

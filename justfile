@@ -3,7 +3,7 @@ set working-directory := 'src'
 default:
     @just --list
 
-build: clean test int
+build: clean format lint test int
 
 clean:
   uv lock

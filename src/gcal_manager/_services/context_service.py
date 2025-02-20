@@ -22,7 +22,6 @@ class ContextService:
 
     def search_contexts(self) -> list[Context]:
         """Returns a list of known accounts."""
-
         return [self.context(d) for d in self.list_directories()]
 
     def context(self, directory: Path) -> Context:
@@ -45,7 +44,6 @@ class ContextService:
 
     def save_context(self, context: Context) -> Context | None:
         directory = f"{self.directory}/{context.context_id.value}"
-        print(directory)
         if not Path(directory).exists():
             Path(directory).mkdir()
 

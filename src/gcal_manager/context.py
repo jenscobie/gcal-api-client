@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from gcal_manager.account_id import AccountId
-from gcal_manager.context_id import ContextId
+if TYPE_CHECKING:
+    from gcal_manager.account_id import AccountId
+    from gcal_manager.context_id import ContextId
 
 
 @dataclass(frozen=True)

@@ -24,4 +24,5 @@ class EventId(JSONWizard):
     value: str
 
     def none() -> Self:
+        """Returns none or empty event id."""
         return EventId("")

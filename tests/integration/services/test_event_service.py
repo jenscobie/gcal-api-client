@@ -26,7 +26,7 @@ def _setup() -> None:
 
 @pytest.mark.usefixtures("_setup")
 def test_search_events() -> None:
-    search_command = SearchCommand("2025-01-01")
+    search_command = SearchCommand(date="2025-01-01")
 
     events = service.search_events(calendar_id, search_command)
 

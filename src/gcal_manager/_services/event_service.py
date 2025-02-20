@@ -12,17 +12,19 @@ from datetime import datetime
 from typing import TYPE_CHECKING, Self
 
 from gcal_manager._services.base_service import BaseService
-from gcal_manager.commands.search_command import SearchCommand
 from gcal_manager.event import Event
 from gcal_manager.event_id import EventId
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-from gcal_manager.calendar_id import CalendarId
+    from gcal_manager.calendar_id import CalendarId
+    from gcal_manager.commands.search_command import SearchCommand
 
 
 class EventService(BaseService):
+    """Gateway for the Google Calendar API."""
+
     def __init__(self, directory: Path) -> Self:
         """Constructor.
 
@@ -34,9 +36,18 @@ class EventService(BaseService):
     def search_events(
         self, calendar_id: CalendarId, command: SearchCommand
     ) -> list[Event]:
-        calendar_timezone = (
-            "US/Pacific"  # TODO: Should come from calendar settings
-        )
+        """Filter events in the Google Calendar.
+
+        Args:
+            calendar_id: The unique identifier for the calendar being
+              searched.
+            command: Criteria to filter search results by.
+
+        Returns:
+          A list of events matching the search criteria.
+        """
+        # TODO: Should come from calendar settings
+        calendar_timezone = "US/Pacific"
         query = command.query()
         date_from = command.from_date(calendar_timezone)
         date_to = command.to_date(calendar_timezone)

@@ -16,8 +16,8 @@ if TYPE_CHECKING:
     from gcal_manager.account_id import AccountId
 
 from gcal_manager._services.base_service import BaseService
-from gcal_manager.calendar import Calendar
 from gcal_manager.calendar_id import CalendarId
+from gcal_manager.calendars import Calendar
 
 
 class CalendarService(BaseService):

@@ -21,7 +21,6 @@ class AccountService:
 
     def search_accounts(self) -> list[Account]:
         """Returns a list of known accounts."""
-
         return [self.account(d) for d in self.list_directories()]
 
     def account(self, directory: Path) -> Account:
