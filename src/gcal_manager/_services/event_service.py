@@ -34,13 +34,21 @@ class EventService(BaseService):
     def search_events(
         self, calendar_id: CalendarId, command: SearchCommand
     ) -> list[Event]:
+        calendar_timezone = (
+            "US/Pacific"  # TODO: Should come from calendar settings
+        )
         query = command.query()
+        date_from = command.from_date(calendar_timezone)
+        date_to = command.to_date(calendar_timezone)
 
+        # https://developers.google.com/calendar/api/v3/reference/events/list
         results = (
             self.client.events()
             .list(
                 calendarId=calendar_id.value,
                 q=query,
+                timeMin=date_from.isoformat(),
+                timeMax=date_to.isoformat(),
                 maxResults=100,
                 singleEvents=True,
                 orderBy="startTime",
@@ -50,22 +58,41 @@ class EventService(BaseService):
 
         return [self.event(calendar_id, result) for result in results["items"]]
 
-    def get_event(self, event_id: EventId) -> Event:
-        return None
+    def get_event(self, calendar_id: CalendarId, event_id: EventId) -> Event:
+        # https://developers.google.com/calendar/api/v3/reference/events/get
+        return self.event(
+            calendar_id,
+            self.client.events()
+            .get(calendarId=calendar_id.value, eventId=event_id.value)
+            .execute(),
+        )
 
     def save_event(self, event: Event) -> Event:
-        return None
+        resource = event.to_json()
 
-    def delete_event(self, event_id: EventId) -> None:
-        pass
+        # https://developers.google.com/calendar/api/v3/reference/events/insert
+        result = (
+            self.client.events()
+            .insert(calendarId=event.calendar_id.value, body=resource)
+            .execute()
+        )
+        return self.event(event.calendar_id, result)
+
+    def delete_event(self, calendar_id: CalendarId, event_id: EventId) -> None:
+        # https://developers.google.com/calendar/api/v3/reference/events/delete
+        self.client.events().delete(
+            calendarId=calendar_id.value, eventId=event_id.value
+        ).execute()
 
     def event(self, calendar_id: CalendarId, result: dict) -> Event:
         return Event(
-            event_id=EventId(""),
+            event_id=EventId(result["id"]),
             calendar_id=calendar_id,
             name=result["summary"],
-            description="",
-            location="",
+            # description=result["description"],
+            description="something",
+            # location=result["location"],
+            location="something",
             url=result["htmlLink"],
             start=self.parse_datetime("start", result),
             end=self.parse_datetime("end", result),

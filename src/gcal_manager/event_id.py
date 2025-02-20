@@ -8,6 +8,7 @@ Typical usage example:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Self
 
 from dataclass_wizard import JSONWizard
 
@@ -21,3 +22,6 @@ class EventId(JSONWizard):
     """
 
     value: str
+
+    def none() -> Self:
+        return EventId("")

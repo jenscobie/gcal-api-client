@@ -13,17 +13,20 @@ class SearchCommand:
         self.task_id = task_id
         self.search_term = search_term
 
-    def from_date(self) -> date:
+    def from_date(self, tz) -> date:
         if not self.date:
             return SearchCommand.min_date()
 
-        return dateparser.parse(self.date)
+        return dateparser.parse(
+            self.date,
+            settings={"TIMEZONE": str(tz), "RETURN_AS_TIMEZONE_AWARE": True},
+        )
 
-    def to_date(self) -> date:
+    def to_date(self, tz) -> date:
         if not self.date:
             return SearchCommand.max_date()
 
-        return self.from_date() + timedelta(days=1)
+        return self.from_date(tz) + timedelta(days=1)
 
     def query(self) -> str:
         query = ""

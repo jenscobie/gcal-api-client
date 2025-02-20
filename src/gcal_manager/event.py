@@ -19,3 +19,27 @@ class Event:
     url: str
     start: datetime
     end: datetime
+
+    def to_json(self) -> str:
+        return {
+            "kind": "calendar#event",
+            "summary": self.name,
+            "description": self.description,
+            "location": self.location,
+            "start": self.start_json(),
+            "end": self.end_json(),
+        }
+
+    def start_json(self) -> str:
+        return {
+            #'date': date,
+            "dateTime": self.start.strftime("%Y-%m-%dT%H:%M:%S"),
+            "timeZone": "America/Los_Angeles",
+        }
+
+    def end_json(self) -> str:
+        return {
+            #'date': date,
+            "dateTime": self.end.strftime("%Y-%m-%dT%H:%M:%S"),
+            "timeZone": "America/Los_Angeles",
+        }

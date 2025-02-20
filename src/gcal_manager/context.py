@@ -1,6 +1,7 @@
 """Store and retrieve contexts."""
 
 from __future__ import annotations
+
 from dataclasses import dataclass
 
 from gcal_manager.account_id import AccountId

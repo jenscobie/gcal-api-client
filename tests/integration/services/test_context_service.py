@@ -1,12 +1,12 @@
-import pytest
-
 from pathlib import Path
 from typing import Callable
 
-from gcal_manager.context import Context
-from gcal_manager.context_id import ContextId
+import pytest
+
 from gcal_manager._services.context_service import ContextService
 from gcal_manager.account_id import AccountId
+from gcal_manager.context import Context
+from gcal_manager.context_id import ContextId
 
 directory = "tests/data/context"
 context_id = ContextId("integration-test")
@@ -46,4 +46,3 @@ def test_get_context(_setup: Callable) -> None:
     result = service.get_context(context_id)
 
     assert result == context
-

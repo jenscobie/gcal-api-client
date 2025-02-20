@@ -1,7 +1,7 @@
 from pathlib import Path
-import pytest
-
 from typing import Callable
+
+import pytest
 
 from gcal_manager._services.account_service import AccountService
 from gcal_manager.account import Account
@@ -13,9 +13,13 @@ service = AccountService(path)
 
 
 def build() -> Account:
-    return Account(account_id=account_id, path=Path(f"{path}/{account_id.value}"))
+    return Account(
+        account_id=account_id, path=Path(f"{path}/{account_id.value}")
+    )
+
 
 account = build()
+
 
 @pytest.fixture
 def _setup() -> None:

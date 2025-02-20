@@ -29,7 +29,7 @@ class AccountService:
         return Account(account_id=account_id, path=directory)
 
     def get_account(self, account_id: AccountId) -> Account | None:
-        account = next(
+        return next(
             (
                 account
                 for account in self.search_accounts()
@@ -37,7 +37,6 @@ class AccountService:
             ),
             None,
         )
-        return account
 
     def save_account(self, account: Account) -> Account | None:
         directory = f"{self.directory}/{account.account_id.value}"
