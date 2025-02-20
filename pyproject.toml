@@ -1,4 +1,4 @@
-[tool.poetry]
+[project]
 name = "gcal-manager"
 version = "0.1.0"
 description = "Add, edit or delete events from your Google Calendars"
@@ -9,78 +9,21 @@ repository = "https://github.com/jenscobie/gcal-manager"
 packages = [
     { include = "gcal_manager", from = "src" },
 ]
+requires-python = ">=3.13"
+dependencies = [
+    "google-api-python-client>=2.155.0",
+    "google-auth-oauthlib>=1.2.1",
+    "google-auth-httplib2>=0.2.0",
+    "dataclass-wizard>=0.32.1",
+    "dateparser>=1.2.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.13"
-google-api-python-client = "^2.155.0"
-google-auth-oauthlib = "^1.2.1"
-google-auth-httplib2 = "^0.2.0"
-dataclass-wizard = "^0.32.1"
-dateparser = "^1.2.0"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.7.3"
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.3"
-pytest-cov = "^6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ruff>=0.7.3",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-
-[tool.ruff]
-indent-width = 4
-include = ["*.py"]
-fix = true
-line-length = 79 # https://peps.python.org/pep-0008/#maximum-line-length
-output-format = "grouped"
-src = ["src", "tests"]
-
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 72 # https://peps.python.org/pep-0008/#maximum-line-length
-indent-style = "space"
-line-ending = "lf"
-quote-style = "double"
-
-[tool.ruff.lint]
-select = [ 
-    "ALL" 
-    ]
-ignore = [
-    # These rules conflict with the ruff formatter
-    # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
-    "E111", # indentation-with-invalid-multiple
-    "E114", # indentation-with-invalid-multiple-comment
-    "E117", # over-indented
-    "D203", # one-blank-line-before-class
-    "D206", # indent-with-spaces
-    "D213", # multi-line-summary-second-line
-    "D300", # triple-single-quotes
-    "Q000", # bad-quotes-inline-string
-    "Q001", # bad-quotes-multiline-string
-    "Q002", # bad-quotes-docstring
-    "Q003", # avoidable-escaped-quote
-    "COM812", # missing-trailing-comma, issue: https://github.com/astral-sh/ruff/issues/9216
-    "COM819", # prohibited-trailing-comma
-    "ISC001", # single-line-implicit-string-concatenation
-    "ISC002", # multi-line-implicit-string-concatenation
-    ]
-fixable = [
-    # pycodestyle
-    "E", "W",
-    # isort
-    "I",
-    # flake8
-    "COM", # commas
-    ]
-
-[tool.ruff.lint.per-file-ignores]
-"tests/*.py" = ["S101"] # Checks for uses of the assert keyword
-
-[tool.ruff.lint.pydocstyle]
-convention = "google" # Use Google-style docstrings
